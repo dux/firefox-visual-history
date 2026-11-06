@@ -4,6 +4,8 @@ Firefox extension that shows the last year of browsing history grouped by domain
 Each row shows a preview image of the domain root page, the domain with its 7 latest links, and a button that deletes all history for that domain.
 Pages show 50 domains each.
 
+![Visual history by dux](./screenshot.png)
+
 ## Opening it
 
 * Tools menu (menu bar) -> Visual history by dux. WebExtensions cannot add items to the History menu, so Tools is the closest spot.
@@ -40,7 +42,7 @@ Pages show 50 domains each.
 
 Temporary (removed when Firefox restarts):
 
-* `about:debugging#/runtime/this-firefox` -> Load Temporary Add-on -> pick `./manifest.json`.
+* `about:debugging#/runtime/this-firefox` -> Load Temporary Add-on -> pick `./extension/manifest.json`.
 
 Permanent:
 
