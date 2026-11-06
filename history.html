@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Visual history by dux</title>
+  <link rel="icon" href="icons/icon.svg">
+  <link rel="stylesheet" href="history.css">
+</head>
+<body>
+  <header>
+    <h1><a href="#">Visual history by dux</a></h1>
+    <span id="summary"></span>
+    <div class="controls" id="list-controls">
+      <input id="filter" type="search" placeholder="Filter domains" autofocus>
+      <select id="sort">
+        <option value="recent">Most recent</option>
+        <option value="visits">Most visits</option>
+        <option value="name">Name</option>
+      </select>
+    </div>
+  </header>
+  <div id="ranges">
+    <span class="label">Delete history older than</span>
+    <button class="delete" data-days="365" data-label="1 year">1 year</button>
+    <button class="delete" data-days="90" data-label="3 months">3 months</button>
+    <button class="delete" data-days="30" data-label="1 month">1 month</button>
+    <button class="delete" data-days="7" data-label="1 week">1 week</button>
+    <button class="delete" data-days="0" data-label="0 days">0 days</button>
+    <span id="range-status"></span>
+    <label title="Once a day, delete the history of every domain in Banned domains"><input type="checkbox" id="auto-purge"> Bg delete of banned domains</label>
+  </div>
+  <div id="marked"></div>
+  <main id="view"></main>
+  <dialog id="purge">
+    <h3 id="purge-title">Deleting history</h3>
+    <p id="purge-status"></p>
+    <progress id="purge-progress"></progress>
+    <div id="purge-hosts"></div>
+    <ol id="purge-log"></ol>
+    <form method="dialog"><button id="purge-close">Hide, keep deleting</button></form>
+  </dialog>
+  <script src="shared.js"></script>
+  <script src="history.js"></script>
+</body>
+</html>
