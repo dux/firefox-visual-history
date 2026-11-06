@@ -30,7 +30,7 @@ Pages show 50 domains each.
   Opening the page during a running delete opens it too.
 * Every remembered domain is purged automatically once a day through the same queue, while "Bg delete of banned domains" is checked (on by default, saved as `autoPurge` in `storage.local`).
   The background script checks hourly and runs when 24 hours have passed since `lastPurge` in `storage.local`, since Firefox drops alarms on restart.
-* "Delete history older than" 1 year, 3 months, 1 month, 1 week or 0 days (everything) calls `browser.history.deleteRange` in the background script, without confirmation.
+* "Delete older than" 1 year, 3 months, 1 month, 1 week or 0 days (everything) calls `browser.history.deleteRange` in the background script, without confirmation.
   Only visits older than the cutoff go; a page visited again since then stays with its newer visits.
   Each button shows how many links go entirely (last visit before the cutoff) and is disabled at 0; counts refresh after deletes and when the tab becomes visible.
 * Clicking a domain opens its own view (`#domain=<host>`) with all its links from all time, 15 per page.
@@ -57,8 +57,10 @@ Permanent:
 
 ### Chrome
 
-* `chrome://extensions` -> Developer mode -> Load unpacked -> pick `./extension/`.
-* After changing files, press reload on the extension card.
+* `node build-chrome.mjs` writes `./dist/chrome/` and the Web Store upload `./dist/visual-history-chrome-<version>.zip`.
+  Its manifest drops the Firefox-only keys (`background.scripts`, `menus`, `browser_specific_settings`, `default_area`) that Chrome warns about.
+* `chrome://extensions` -> Developer mode -> Load unpacked -> pick `./dist/chrome/`.
+* After changing files, run `node build-chrome.mjs` again and press reload on the extension card.
 
 ## Development
 

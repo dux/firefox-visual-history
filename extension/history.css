@@ -7,7 +7,6 @@
   --border: #e3e3e8;
   --accent: #5b5bd6;
   --danger: #d1343e;
-  font: 14px/1.45 system-ui, -apple-system, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -25,6 +24,8 @@
 * { box-sizing: border-box; }
 
 body {
+  /* On body, not :root: Chrome injects body { font-size: 75% } into extension pages. */
+  font: 16px/1.45 system-ui, -apple-system, sans-serif;
   margin: 0 auto;
   padding: 24px 32px 48px;
   max-width: 1200px;
@@ -39,7 +40,7 @@ header {
   flex-wrap: wrap;
 }
 
-h1 { margin: 0; font-size: 22px; }
+h1 { margin: 0; font-size: 24px; }
 h1 a { color: inherit; text-decoration: none; }
 
 [hidden] { display: none !important; }
@@ -72,8 +73,10 @@ button:disabled { opacity: .4; cursor: default; }
   color: var(--muted);
 }
 
+/* Fixed layout: with auto layout the nowrap links push the table past the header's right edge. */
 table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: separate;
   border-spacing: 0 12px;
 }
@@ -117,7 +120,7 @@ td.links {
 
 .shot img { width: 100%; height: 100%; object-fit: cover; }
 .shot.icon img { width: 96px; height: 96px; object-fit: contain; }
-.shot.loading { font-size: 13px; font-weight: 400; text-transform: none; }
+.shot.loading { font-size: 14px; font-weight: 400; text-transform: none; }
 
 .delete {
   margin-top: 10px;
@@ -132,14 +135,14 @@ h2 {
   align-items: center;
   gap: 8px;
   margin: 0;
-  font-size: 17px;
+  font-size: 19px;
 }
 
 h2 img { width: 16px; height: 16px; }
 h2 a { color: inherit; text-decoration: none; }
 h2 a:hover { text-decoration: underline; }
 
-.meta { color: var(--muted); font-size: 12px; margin: 2px 0 10px; }
+.meta { color: var(--muted); font-size: 14px; margin: 2px 0 10px; }
 
 ol { list-style: none; margin: 0; padding: 0; }
 
@@ -161,7 +164,7 @@ ol { list-style: none; margin: 0; padding: 0; }
 }
 
 .links li a:hover { text-decoration: underline; }
-.links li time { color: var(--muted); font-size: 12px; white-space: nowrap; }
+.links li time { color: var(--muted); font-size: 14px; white-space: nowrap; }
 
 .empty { text-align: center; color: var(--muted); padding: 48px; }
 
@@ -216,7 +219,7 @@ ol { list-style: none; margin: 0; padding: 0; }
   border-radius: 999px;
   background: var(--bg);
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   text-align: center;
 }
 
@@ -255,7 +258,7 @@ ol { list-style: none; margin: 0; padding: 0; }
 .shot.small.icon img { width: 56px; height: 56px; }
 
 .expanded .body { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.expanded .title { color: var(--fg); font-size: 15px; font-weight: 600; text-decoration: none; }
+.expanded .title { color: var(--fg); font-size: 17px; font-weight: 600; text-decoration: none; }
 .expanded .title:hover { text-decoration: underline; }
 
 .expanded .url {
@@ -263,7 +266,7 @@ ol { list-style: none; margin: 0; padding: 0; }
   white-space: nowrap;
   text-overflow: ellipsis;
   color: var(--accent);
-  font-size: 12px;
+  font-size: 14px;
   text-decoration: none;
 }
 
@@ -277,7 +280,7 @@ ol { list-style: none; margin: 0; padding: 0; }
 }
 
 .expanded .description:empty { display: none; }
-.expanded time { color: var(--muted); font-size: 12px; }
+.expanded time { color: var(--muted); font-size: 14px; }
 
 #purge {
   width: min(820px, calc(100vw - 48px));
@@ -289,7 +292,7 @@ ol { list-style: none; margin: 0; padding: 0; }
 }
 
 #purge::backdrop { background: rgb(0 0 0 / .45); }
-#purge h3 { margin: 0; font-size: 17px; }
+#purge h3 { margin: 0; font-size: 19px; }
 #purge p { margin: 2px 0 12px; color: var(--muted); }
 #purge progress { width: 100%; accent-color: var(--danger); }
 
@@ -304,7 +307,7 @@ ol { list-style: none; margin: 0; padding: 0; }
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 8px;
-  font: 12px/1.7 ui-monospace, SFMono-Regular, Menlo, monospace;
+  font: 14px/1.7 ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 #purge-log li { padding: 0 12px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }

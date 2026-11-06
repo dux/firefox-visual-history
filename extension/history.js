@@ -29,7 +29,7 @@ const state = {
   counts: new Map(), // current all-time link count per marked host
   purge: null, // latest progress of the background delete queue
   rangeCounts: new Map(), // days -> links whose last visit is older, so a range delete removes them entirely
-  rangeRunning: false // a "Delete history older than" delete is in flight
+  rangeRunning: false // a "Delete older than" delete is in flight
 }
 const pageMeta = new Map()
 
