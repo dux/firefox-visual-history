@@ -1,3 +1,6 @@
+// Chrome runs this file alone as a service worker; Firefox loads shared.js first from the manifest.
+globalThis.importScripts?.('shared.js')
+
 const PAGE_URL = browser.runtime.getURL('history.html')
 const MENU_ID = 'visual-history'
 const PURGE_ALARM = 'purge-marked'
@@ -15,13 +18,17 @@ async function openVisualHistory() {
   }
 }
 
-// WebExtensions cannot extend the History menu; Tools is the closest menu bar slot.
-browser.menus.create({ id: MENU_ID, title: browser.runtime.getManifest().name, contexts: ['tools_menu'] })
-
-browser.menus.onClicked.addListener((info) => {
-  if (info.menuItemId === MENU_ID) openVisualHistory()
-})
-browser.browserAction.onClicked.addListener(openVisualHistory)
+// WebExtensions cannot extend the History menu; Tools is the closest menu bar slot. Chrome has no menus API.
+// Menus persist across event page restarts, so they are created once per install or update.
+if (browser.menus) {
+  browser.runtime.onInstalled.addListener(() => {
+    browser.menus.create({ id: MENU_ID, title: browser.runtime.getManifest().name, contexts: ['tools_menu'] })
+  })
+  browser.menus.onClicked.addListener((info) => {
+    if (info.menuItemId === MENU_ID) openVisualHistory()
+  })
+}
+browser.action.onClicked.addListener(openVisualHistory)
 browser.commands.onCommand.addListener((command) => {
   if (command === 'open-visual-history') openVisualHistory()
 })
@@ -122,7 +129,8 @@ async function deleteOlderThan(days) {
   }
 }
 
-browser.alarms.create(PURGE_ALARM, { delayInMinutes: 1, periodInMinutes: 60 })
+// Chrome restarts its service worker often; re-creating the alarm each time would keep re-arming the 1 minute delay.
+browser.alarms.get(PURGE_ALARM).then((alarm) => alarm || browser.alarms.create(PURGE_ALARM, { delayInMinutes: 1, periodInMinutes: 60 }))
 browser.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === PURGE_ALARM) purgeIfDue()
 })

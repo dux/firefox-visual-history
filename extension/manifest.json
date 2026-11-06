@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Visual history by dux",
   "version": "1.0.0",
   "description": "Last year of browsing history grouped by domain, with a preview image and the latest links per domain.",
@@ -11,23 +11,29 @@
     }
   },
   "icons": {
-    "48": "icons/icon.svg",
-    "96": "icons/icon.svg"
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
   },
   "permissions": [
     "alarms",
     "history",
     "storage",
     "menus",
-    "tabs",
-    "<all_urls>"
+    "tabs"
   ],
+  "host_permissions": ["<all_urls>"],
   "background": {
-    "scripts": ["shared.js", "background.js"]
+    "scripts": ["shared.js", "background.js"],
+    "service_worker": "background.js"
   },
-  "browser_action": {
+  "action": {
     "default_title": "Visual history by dux",
-    "default_icon": "icons/icon.svg",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    },
     "default_area": "navbar"
   },
   "commands": {

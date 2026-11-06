@@ -1,3 +1,6 @@
+// Chrome only has chrome.*; under MV3 it returns promises like browser.*.
+globalThis.browser ??= chrome
+
 const DAY = 864e5
 const MAX_RESULTS = 1e6
 

@@ -1,6 +1,6 @@
 # Visual history by dux
 
-Firefox extension that shows the last year of browsing history grouped by domain.
+Firefox and Chrome extension that shows the last year of browsing history grouped by domain.
 Each row shows a preview image of the domain root page, the domain with its 7 latest links, and a button that deletes all history for that domain.
 Pages show 50 domains each.
 
@@ -8,7 +8,7 @@ Pages show 50 domains each.
 
 ## Opening it
 
-* Tools menu (menu bar) -> Visual history by dux. WebExtensions cannot add items to the History menu, so Tools is the closest spot.
+* Tools menu (menu bar) -> Visual history by dux, Firefox only. WebExtensions cannot add items to the History menu, so Tools is the closest spot.
 * Toolbar button.
 * `Alt+Shift+H`.
 
@@ -40,6 +40,11 @@ Pages show 50 domains each.
 
 ## Install
 
+Both browsers load the same `./extension/` folder.
+Its `manifest.json` is MV3 and lists both background forms: Firefox runs `background.scripts` as an event page, Chrome runs `background.service_worker`.
+
+### Firefox
+
 Temporary (removed when Firefox restarts):
 
 * `about:debugging#/runtime/this-firefox` -> Load Temporary Add-on -> pick `./extension/manifest.json`.
@@ -50,7 +55,14 @@ Permanent:
   `npx web-ext sign --channel unlisted --api-key ... --api-secret ...`, then open the `.xpi` from `./web-ext-artifacts/` in Firefox.
 * Firefox Developer Edition, Nightly or ESR: set `xpinstall.signatures.required` to `false` in `about:config`, run `npx web-ext build`, then install the zip from `about:addons` -> gear -> Install Add-on From File.
 
+### Chrome
+
+* `chrome://extensions` -> Developer mode -> Load unpacked -> pick `./extension/`.
+* After changing files, press reload on the extension card.
+
 ## Development
 
 * `npx web-ext run` starts Firefox with the extension loaded and reloads it on change.
-* `npx web-ext lint` validates the manifest and code.
+* `npx web-ext lint` validates the manifest and code. Its `BACKGROUND_SERVICE_WORKER_IGNORED` warning is expected: that key is for Chrome.
+* The PNG icons in `./extension/icons/` are rendered from `icon.svg`, since Chrome does not accept SVG icons:
+  `for s in 16 32 48 128; do rsvg-convert -w $s -h $s extension/icons/icon.svg -o extension/icons/icon-$s.png; done`.
